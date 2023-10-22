@@ -16,12 +16,11 @@ async function processImage() {
   const result = await response.json();
 
   // Display color palette
-  const paletteDiv = document.getElementById('palette');
+  const paletteDiv = document.getElementsByClassName('palette')[0];
   paletteDiv.innerHTML = '';
   result.colors.forEach((color) => {
     const colorDiv = document.createElement('div');
-    colorDiv.style.width = '20px';
-    colorDiv.style.height = '20px';
+    colorDiv.className = 'color-box'
     colorDiv.style.backgroundColor = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
     paletteDiv.appendChild(colorDiv);
   });
