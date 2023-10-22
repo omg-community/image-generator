@@ -8,7 +8,7 @@ const kmeans = require('node-kmeans');
 const app = express();
 const port = 3000;
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.use(cors());
 
@@ -36,7 +36,7 @@ app.post('/processImage', upload.single('image'), async (req, res) => {
   try {
     const dimension = parseInt(req.body.dimension, 10);
 
-    const buffer = await sharp(req.file.path)
+    const buffer = await sharp(req.file.buffer)
       .resize({ width: dimension, height: dimension })
       .raw()
       .toBuffer({ resolveWithObject: true });
