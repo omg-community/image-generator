@@ -1,22 +1,23 @@
 const express = require('express');
 const sharp = require('sharp');
 const getColors = require('get-image-colors');
+const multer = require('multer');
 
 const app = express();
 const port = 3000;
+const upload = multer({ dest: 'uploads/' });
 
-app.use(express.json());
-
-app.post('/processImage', async (req, res) => {
-  const { imageUrl, dimensions, colorCount } = req.body;
+app.post('/processImage', upload.single('image'), async (req, res) => {
+  const { dimensions, colorCount } = req.body;
+  const filePath = req.file.path;
 
   // Downscale image
-  const buffer = await sharp(imageUrl)
-    .resize({ width: dimensions, height: dimensions })
+  const buffer = await sharp(filePath)
+    .resize({ width: parseInt(dimensions), height: parseInt(dimensions) })
     .toBuffer();
 
   // Get color palette
-  const colors = await getColors(buffer, 'image/png', colorCount);
+  const colors = await getColors(buffer, 'image/png', parseInt(colorCount));
 
   res.json({ colors: colors.map(c => c.hex()) });
 });
