@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Processor</title>
+</head>
+<body>
+  <form id="imageForm" enctype="multipart/form-data">
+    <input type="file" id="image" name="image">
+    <input type="number" id="dimensions" name="dimensions" placeholder="Dimensions" value="90">
+    <input type="number" id="colorCount" name="colorCount" placeholder="Color Count" value="5">
+    <button type="button" onclick="processImage()">Process</button>
+  </form>
+
+  <script src="script.js"></script>
+</body>
+</html>
